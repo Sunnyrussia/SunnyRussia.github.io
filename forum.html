@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUNNY RUSSIA | Форум</title>
+    <!-- Подключаем шрифты, аналогичные оригиналу -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ===== ФОН НА ВСЮ СТРАНИЦУ (ВАША ССЫЛКА) ===== */
+        .full-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
+            z-index: -2;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+        /* ===== ШАПКА (HEADER) ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo svg {
+            width: 50px;
+            height: 50px;
+        }
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ff7f17;
+            text-shadow: 0 0 20px rgba(255, 127, 23, 0.4);
+            letter-spacing: 2px;
+        }
+        .nav-menu ul {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-menu ul li a {
+            color: #ccc;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu ul li a:hover,
+        .nav-menu ul li a.active {
+            color: #ff7f17;
+            text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
+            border-bottom-color: #ff7f17;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff7f17;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main {
+            position: relative;
+            z-index: 5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 120px);
+        }
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 127, 23, 0.3);
+        }
+        .page-title span {
+            color: #ff7f17;
+        }
+        .forum-sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,127,23,0.1);
+            padding-bottom: 15px;
+        }
+
+        /* ===== ТАБЛИЦА ФОРУМА ===== */
+        .forum-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255, 127, 23, 0.1);
+        }
+        .forum-table thead {
+            background: rgba(255, 127, 23, 0.15);
+            backdrop-filter: blur(4px);
+        }
+        .forum-table th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            color: #ff7f17;
+            border-bottom: 2px solid rgba(255, 127, 23, 0.3);
+        }
+        .forum-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: middle;
+            transition: background 0.2s;
+        }
+        .forum-table tbody tr {
+            transition: background 0.2s;
+        }
+        .forum-table tbody tr:hover {
+            background: rgba(255, 127, 23, 0.08);
+        }
+        .forum-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Цветовые индикаторы категорий */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid currentColor;
+        }
+        .badge-red { color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.1); }
+        .badge-yellow { color: #ffbb33; border-color: #ffbb33; background: rgba(255,187,51,0.1); }
+        .badge-green { color: #44bb66; border-color: #44bb66; background: rgba(68,187,102,0.1); }
+        .badge-azure { color: #44aaff; border-color: #44aaff; background: rgba(68,170,255,0.1); }
+        .badge-silver { color: #cccccc; border-color: #cccccc; background: rgba(204,204,204,0.1); }
+
+        .category-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .stats {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        .stats strong {
+            color: #fff;
+        }
+        .last-post {
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        .last-post .author {
+            color: #ff7f17;
+            font-weight: 600;
+        }
+        .last-post .time {
+            color: #888;
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }
+
+        /* ===== КНОПКА НАЗАД ===== */
+        .back-home {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 127, 23, 0.15);
+            border: 1px solid rgba(255, 127, 23, 0.3);
+            border-radius: 50px;
+            color: #ff7f17;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .back-home:hover {
+            background: rgba(255, 127, 23, 0.3);
+            box-shadow: 0 0 20px rgba(255, 127, 23, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #ff7f17;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            .nav-menu ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-menu ul.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .forum-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            .forum-table th, .forum-table td {
+                padding: 12px 14px;
+                font-size: 0.85rem;
+            }
+            .category-name {
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 1.2rem;
+            }
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .forum-table th, .forum-table td {
+                padding: 10px 10px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ФОН -->
+    <div class="full-bg"></div>
+    <div class="overlay"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="logo">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="25" fill="#ff7f17" />
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
+            </svg>
+            <span>SUNNY RUSSIA</span>
+        </div>
+        <nav class="nav-menu">
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <ul id="navList">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="#">Новости</a></li>
+                <li><a href="forum.html" class="active">Форум</a></li>
+                <li><a href="#">Скачать</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+        <h1 class="page-title">Форум <span>SUNNY RUSSIA</span></h1>
+        <div class="forum-sub">Активные обсуждения и последние темы</div>
+
+        <!-- ТАБЛИЦА ФОРУМА (данные со скриншота) -->
+        <table class="forum-table">
+            <thead>
+                <tr>
+                    <th>Категория</th>
+                    <th>Темы</th>
+                    <th>Сообщения</th>
+                    <th>Последнее сообщение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- RED -->
+                <tr>
+                    <td>
+                        <span class="category-badge badge-red">RED</span>
+                        <div class="category-name">УМВД | Еженедельные рапорты</div>
+                    </td>
+                    <td class="stats"><strong>1,3K</strong></td>
+                    <td class="stats"><strong>139,1K</strong></td>
+                    <td class="last-post">
+                        <span class="author">Marsov</span>
+                        <span class="time">Только что</span>
+                    </td>
+                </tr>
+                <!-- YELLOW -->
+                <tr>
+                    <td>
+                        <span class="category-badge badge-yellow">YELLOW</span>
+                        <div class="category-name">ТРК "Амазинг" | Дополнительные услуги</div>
+                    </td>
+                    <td class="stats"><strong>2,8K</strong></td>
+                    <td class="stats"><strong>159,9K</strong></td>
+                    <td class="last-post">
+                        <span class="author">Crestive_Alvarez</span>
+                        <span class="time">Минуту назад</span>
+                    </td>
+                </tr>
+                <!-- GREEN -->
+                <tr>
+                    <td>
+                        <span class="category-badge badge-green">GREEN</span>
+                        <div class="category-name">Рапорт о проделанной работе</div>
+                    </td>
+                    <td class="stats"><strong>775</strong></td>
+                    <td class="stats"><strong>145,6K</strong></td>
+                    <td class="last-post">
+                        <span class="author">Alextx</span>
+                        <span class="time">2 мин. назад</span>
+                    </td>
+                </tr>
+                <!-- AZURE -->
+                <tr>
+                    <td>
+                        <span class="category-badge badge-azure">AZURE</span>
+                        <div class="category-name">Рапорты о проделанной работе</div>
+                    </td>
+                    <td class="stats"><strong>2,9K</strong></td>
+                    <td class="stats"><strong>193,7K</strong></td>
+                    <td class="last-post">
+                        <span class="author">Artem_Baltika</span>
+                        <span class="time">Только что</span>
+                    </td>
+                </tr>
+                <!-- SILVER -->
+                <tr>
+                    <td>
+                        <span class="category-badge badge-silver">SILVER</span>
+                        <div class="category-name">Дополнительный заработок</div>
+                    </td>
+                    <td class="stats"><strong>945</strong></td>
+                    <td class="stats"><strong>38,4K</strong></td>
+                    <td class="last-post">
+                        <span class="author">Anubis Vasilich</span>
+                        <span class="time">Только что</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Кнопка возврата на главную -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-home">← На главную</a>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        © 2026 SUNNY RUSSIA · Все права защищены · <a href="#">Политика конфиденциальности</a>
+    </footer>
+
+    <!-- СКРИПТ ДЛЯ БУРГЕР-МЕНЮ -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+        });
+    </script>
+
+</body>
+  </html>

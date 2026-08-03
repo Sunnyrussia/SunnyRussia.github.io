@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUNNY RUSSIA | Об игре</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ===== ФОН НА ВСЮ СТРАНИЦУ (ВАША ССЫЛКА) ===== */
+        .full-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
+            z-index: -2;
+        }
+
+        /* ===== ШАПКА (HEADER) ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo svg {
+            width: 50px;
+            height: 50px;
+        }
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ff7f17;
+            text-shadow: 0 0 20px rgba(255, 127, 23, 0.4);
+            letter-spacing: 2px;
+        }
+        .nav-menu ul {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-menu ul li a {
+            color: #ccc;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu ul li a:hover,
+        .nav-menu ul li a.active {
+            color: #ff7f17;
+            text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
+            border-bottom-color: #ff7f17;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff7f17;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 120px);
+        }
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 127, 23, 0.3);
+        }
+        .page-title span {
+            color: #ff7f17;
+        }
+        .page-sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,127,23,0.1);
+            padding-bottom: 15px;
+        }
+
+        /* ===== СЕКЦИИ ОПИСАНИЯ ===== */
+        .info-section {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 30px;
+            padding: 30px 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 127, 23, 0.1);
+            transition: transform 0.2s;
+        }
+        .info-section:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 127, 23, 0.3);
+        }
+        .info-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff7f17;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-section h2 .emoji {
+            font-size: 2rem;
+        }
+        .info-section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+        .info-section ul {
+            list-style: disc;
+            padding-left: 25px;
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        .info-section ul li {
+            margin-bottom: 5px;
+        }
+        .info-section ul li strong {
+            color: #ff7f17;
+        }
+
+        /* ===== КНОПКА НАЗАД ===== */
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255, 127, 23, 0.15);
+            border: 1px solid rgba(255, 127, 23, 0.3);
+            border-radius: 50px;
+            color: #ff7f17;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .back-home:hover {
+            background: rgba(255, 127, 23, 0.3);
+            box-shadow: 0 0 20px rgba(255, 127, 23, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #ff7f17;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            .nav-menu ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-menu ul.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .info-section {
+                padding: 20px;
+            }
+            .info-section h2 {
+                font-size: 1.4rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 1.2rem;
+            }
+            .info-section p, .info-section ul {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ФОН -->
+    <div class="full-bg"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="logo">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="25" fill="#ff7f17" />
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
+            </svg>
+            <span>SUNNY RUSSIA</span>
+        </div>
+        <nav class="nav-menu">
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <ul id="navList">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html" class="active">Об игре</a></li>
+                <li><a href="forum.html">Форум</a></li>
+                <li><a href="Launcher.apk" download>Скачать</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+        <h1 class="page-title">Об игре <span>SUNNY RUSSIA</span></h1>
+        <div class="page-sub">Узнайте всё о нашем уникальном RP-проекте</div>
+
+        <!-- Вступление -->
+        <div class="info-section">
+            <h2><span class="emoji">🚀</span> Добро пожаловать</h2>
+            <p><strong>SUNNY RUSSIA</strong> — это не просто сервер GTA 5 RP, это целая вселенная, где каждый игрок может стать кем угодно: от простого водителя такси до главы крупной преступной группировки. Мы создали уникальную экосистему, вдохновлённую лучшими проектами (включая легендарный Amazing), но с нашим собственным подходом, свежими идеями и максимальным комфортом для игроков.</p>
+            <p>Наш сервер работает на передовом движке с поддержкой голосового чата, продвинутой экономикой и сотнями уникальных модов. Мы стремимся дать вам <strong>настоящий ролевой опыт</strong>, где каждый поступок имеет значение, а взаимодействие с другими игроками строит историю города.</p>
+        </div>
+
+        <!-- Экономика -->
+        <div class="info-section">
+            <h2><span class="emoji">💰</span> Экономика и бизнес</h2>
+            <p>Экономика <strong>SUNNY RUSSIA</strong> полностью живая и зависит от действий игроков. Вы можете:</p>
+            <ul>
+                <li><strong>Открыть свой бизнес</strong> — от маленького магазинчика до крупного торгового центра «Амазинг».</li>
+                <li><strong>Устроиться на работу</strong> — официальные профессии (полиция, медицина, мэрия) или нелегальные (грабежи, наркотрафик, угон авто).</li>
+                <li><strong>Инвестировать</strong> — покупать недвижимость, акции, развивать свой стартап.</li>
+                <li><strong>Торговать</strong> — система аукционов, чёрный рынок и легальные магазины.</li>
+            </ul>
+            <p>Все цены на товары и услуги формируются динамически, а инфляция контролируется специальными алгоритмами — так же, как в лучших экономических симуляторах.</p>
+        </div>
+
+        <!-- Фракции -->
+        <div class="info-section">
+            <h2><span class="emoji">👥</span> Фракции и организации</h2>
+            <p>В <strong>SUNNY RUSSIA</strong> действует множество фракций, каждая со своей структурой, задачами и влиянием:</p>
+            <ul>
+                <li><strong>Правительственные структуры</strong> — полиция, ФБР, скорая помощь, пожарные.</li>
+                <li><strong>Преступные группировки</strong> — мафиозные семьи, байкерские клубы, уличные банды.</li>
+                <li><strong>Гражданские организации</strong> — журналисты, адвокаты, риелторы, таксисты.</li>
+                <li><strong>Уникальные фракции</strong> — например, «ТРК Амазинг» (торгово-развлекательный комплекс) и другие, созданные по образу лучших проектов.</li>
+            </ul>
+            <p>Вы можете вступить в уже существующую фракцию или создать свою, набрав команду единомышленников.</p>
+        </div>
+
+        <!-- Работа и карьера -->
+        <div class="info-section">
+            <h2><span class="emoji">💼</span> Работа и карьерный рост</h2>
+            <p>Мы предлагаем более 50 различных профессий, каждая из которых имеет свои этапы развития, зарплату и уникальные возможности:</p>
+            <ul>
+                <li><strong>Легальные работы</strong> — курьер, фермер, шахтёр, строитель, продавец.</li>
+                <li><strong>Элитные профессии</strong> — пилот авиакомпании, капитан яхты, хирург.</li>
+                <li><strong>Подпольные занятия</strong> — взломщик, изготовитель оружия, наркодилер.</li>
+                <li><strong>Система повышений</strong> — получайте опыт, повышайте уровень, открывайте новые навыки и доступ к дорогим контрактам.</li>
+            </ul>
+            <p>Прогресс сохраняется навсегда, а ваша репутация влияет на отношение других игроков и NPC.</p>
+        </div>
+
+        <!-- Транспорт и моды -->
+        <div class="info-section">
+            <h2><span class="emoji">🚗</span> Транспорт и кастомизация</h2>
+            <p>Более 300 уникальных транспортных средств, включая эксклюзивные модели, которых нет ни на одном другом сервере:</p>
+            <ul>
+                <li><strong>Автомобили</strong> — от бюджетных седанов до суперкаров и бронированных лимузинов.</li>
+                <li><strong>Воздушный транспорт</strong> — вертолёты, самолёты, дроны.</li>
+                <li><strong>Водный транспорт</strong> — катера, яхты, гидроциклы.</li>
+                <li><strong>Тюнинг</strong> — полная кастомизация внешнего вида, двигателя, подвески, и даже звук выхлопа.</li>
+            </ul>
+            <p>Каждый автомобиль можно купить, продать или обменять на специальной бирже.</p>
+        </div>
+
+        <!-- Голосовой чат и общение -->
+        <div class="info-section">
+            <h2><span class="emoji">🎙️</span> Голосовой чат и атмосфера</h2>
+            <p>Наш сервер использует <strong>современную систему голосового общения</strong> с эффектами окружения и расстояния. Вы можете:</p>
+            <ul>
+                <li>Общаться с игроками рядом — голос зависит от вашего местоположения и погоды.</li>
+                <li>Использовать рацию для связи с командой.</li>
+                <li>Включить «глушилку» или «шум» для конфиденциальных разговоров.</li>
+            </ul>
+            <p>Всё это создаёт невероятно реалистичную атмосферу, где даже простой разговор с незнакомцем может перерасти в интересный сюжет.</p>
+        </div>
+
+        <!-- Уникальные особенности -->
+        <div class="info-section">
+            <h2><span class="emoji">⭐</span> Наши уникальные фишки</h2>
+            <p>Мы гордимся тем, чего нет у других:</p>
+            <ul>
+                <li><strong>«Amazing»-экономика</strong> — гибкая система торговли с интеграцией реального времени.</li>
+                <li><strong>Кастомные квесты</strong> — сюжетные линии с разными концовками, созданные специально для SUNNY RUSSIA.</li>
+                <li><strong>Система домов и бизнесов</strong> — вы можете владеть недвижимостью, сдавать её в аренду или перепродавать.</li>
+                <li><strong>Ежедневные ивенты</strong> — гонки, осады, концерты, ярмарки — никогда не бывает скучно.</li>
+                <li><strong>Репутация и карма</strong> — каждое ваше действие влияет на отношение NPC и других игроков, открывая или закрывая определённые возможности.</li>
+            </ul>
+        </div>
+
+        <!-- Кнопка назад -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-home">Вернуться на главную</a>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        © 2026 SUNNY RUSSIA · Все права защищены · <a href="#">Политика конфиденциальности</a>
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+        });
+    </script>
+
+</body>
+  </html>

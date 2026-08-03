@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUNNY RUSSIA | Главная</title>
+    <!-- Подключаем шрифты, аналогичные оригиналу (SF Pro Display, Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ===== ФОН НА ВСЮ СТРАНИЦУ (ВАША ССЫЛКА) ===== */
+        .full-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
+            z-index: -2;
+        }
+        /* Затемнение для читаемости текста (как в оригинале) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: -1;
+        }
+
+        /* ===== ШАПКА (HEADER) ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 127, 23, 0.5));
+        }
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ff7f17;
+            text-shadow: 0 0 20px rgba(255, 127, 23, 0.4);
+            letter-spacing: 2px;
+        }
+        .nav-menu ul {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-menu ul li a {
+            color: #ccc;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu ul li a:hover {
+            color: #ff7f17;
+            text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
+            border-bottom-color: #ff7f17;
+        }
+        /* Мобильное меню (бургер) – упрощённо */
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff7f17;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .main-content {
+            max-width: 900px;
+            width: 100%;
+        }
+        .main-title {
+            font-size: clamp(2.8rem, 10vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 127, 23, 0.5), 0 10px 30px rgba(0,0,0,0.8);
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+        }
+        .main-title span {
+            color: #ff7f17;
+        }
+        .main-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 400;
+            color: #ddd;
+            text-shadow: 0 0 20px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+            background: rgba(0,0,0,0.3);
+            padding: 12px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 127, 23, 0.2);
+        }
+
+        /* ===== КНОПКА СКАЧИВАНИЯ (СТИЛЬ КАК У BLESS RUSSIA) ===== */
+        .download-btn {
+            display: inline-block;
+            padding: 18px 60px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff7f17, #e65c00);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 127, 23, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            transform: rotate(30deg);
+        }
+        .download-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 50px rgba(255, 127, 23, 0.7), 0 10px 30px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, #ff9933, #ff5500);
+        }
+        .download-btn:hover::after {
+            opacity: 1;
+        }
+        .download-btn:active {
+            transform: scale(0.96);
+        }
+        .download-btn i {
+            margin-right: 12px;
+            font-style: normal;
+            font-size: 1.5em;
+        }
+
+        /* ===== ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ (КАК В ОРИГИНАЛЕ) ===== */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .feature-item {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(8px);
+            padding: 20px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 127, 23, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            min-width: 160px;
+            transition: transform 0.3s;
+        }
+        .feature-item:hover {
+            transform: translateY(-8px);
+            border-color: #ff7f17;
+        }
+        .feature-item .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .feature-item .label {
+            font-weight: 600;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #ff7f17;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: row;
+            }
+            .nav-menu ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-menu ul.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .main-title {
+                font-size: 2.8rem;
+            }
+            .download-btn {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+            .features {
+                gap: 15px;
+            }
+            .feature-item {
+                padding: 15px 20px;
+                min-width: 120px;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 1.2rem;
+            }
+            .main-title {
+                font-size: 2.2rem;
+            }
+            .main-subtitle {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ФОН -->
+    <div class="full-bg"></div>
+    <div class="overlay"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="logo">
+            <!-- Вместо SVG-лого можно поставить вашу картинку, либо текстовый лого -->
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="25" fill="#ff7f17" />
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
+            </svg>
+            <span>SUNNY RUSSIA</span>
+        </div>
+        <nav class="nav-menu">
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <ul id="navList">
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Новости</a></li>
+                <li><a href="#">Скачать</a></li>
+                <li><a href="#">Форум</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+        <div class="main-content">
+            <h1 class="main-title">Добро пожаловать в <span>SUNNY RUSSIA</span></h1>
+            <div class="main-subtitle">⚡ Уникальный GTA 5 RP-сервер с голосовым чатом ⚡</div>
+            
+            <!-- КНОПКА СКАЧИВАНИЯ ЛАУНЧЕРА -->
+            <a href="Launcher.apk" download class="download-btn">
+                <i>⬇</i> СКАЧАТЬ ЛАУНЧЕР
+            </a>
+
+            <!-- БЛОК ПРЕИМУЩЕСТВ (как на Bless Russia) -->
+            <div class="features">
+                <div class="feature-item">
+                    <span class="icon">🎮</span>
+                    <span class="label">Высокий онлайн</span>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🎙️</span>
+                    <span class="label">Голосовой чат</span>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">⚡</span>
+                    <span class="label">Стабильный войс</span>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🛡️</span>
+                    <span class="label">Уникальный мод</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        © 2026 SUNNY RUSSIA · Все права защищены · <a href="#">Политика конфиденциальности</a>
+    </footer>
+
+    <!-- ПРОСТОЙ СКРИПТ ДЛЯ БУРГЕР-МЕНЮ (как в оригинале) -->
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+        });
+    </script>
+
+</body>
+              </html>

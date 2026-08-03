@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SUNNY RUSSIA | Главная</title>
-    <!-- Подключаем шрифты, аналогичные оригиналу (SF Pro Display, Inter) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
@@ -39,17 +38,7 @@
             background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
             z-index: -2;
         }
-        /* Затемнение для читаемости текста (как в оригинале) */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(2px);
-            z-index: -1;
-        }
+        /* Затемнение УДАЛЕНО — фон теперь яркий и чёткий */
 
         /* ===== ШАПКА (HEADER) ===== */
         .header {
@@ -60,8 +49,8 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.3); /* чуть затемнён для читаемости текста, но фон просвечивает */
+            backdrop-filter: blur(4px);
             border-bottom: 1px solid rgba(255, 127, 23, 0.2);
         }
         .logo {
@@ -69,10 +58,9 @@
             align-items: center;
             gap: 12px;
         }
-        .logo img {
+        .logo svg {
+            width: 50px;
             height: 50px;
-            width: auto;
-            filter: drop-shadow(0 0 10px rgba(255, 127, 23, 0.5));
         }
         .logo span {
             font-size: 1.8rem;
@@ -100,7 +88,6 @@
             text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
             border-bottom-color: #ff7f17;
         }
-        /* Мобильное меню (бургер) – упрощённо */
         .menu-toggle {
             display: none;
             font-size: 2rem;
@@ -142,7 +129,7 @@
             color: #ddd;
             text-shadow: 0 0 20px rgba(0,0,0,0.6);
             margin-bottom: 40px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.2);
             padding: 12px 30px;
             border-radius: 50px;
             display: inline-block;
@@ -150,7 +137,7 @@
             border: 1px solid rgba(255, 127, 23, 0.2);
         }
 
-        /* ===== КНОПКА СКАЧИВАНИЯ (СТИЛЬ КАК У BLESS RUSSIA) ===== */
+        /* ===== КНОПКА СКАЧИВАНИЯ ===== */
         .download-btn {
             display: inline-block;
             padding: 18px 60px;
@@ -198,7 +185,7 @@
             font-size: 1.5em;
         }
 
-        /* ===== ДОПОЛНИТЕЛЬНЫЕ ЭЛЕМЕНТЫ (КАК В ОРИГИНАЛЕ) ===== */
+        /* ===== ПРЕИМУЩЕСТВА ===== */
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -207,12 +194,12 @@
             margin-top: 60px;
         }
         .feature-item {
-            background: rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.4);
             backdrop-filter: blur(8px);
             padding: 20px 30px;
             border-radius: 20px;
             border: 1px solid rgba(255, 127, 23, 0.15);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             min-width: 160px;
             transition: transform 0.3s;
         }
@@ -300,12 +287,11 @@
 
     <!-- ФОН -->
     <div class="full-bg"></div>
-    <div class="overlay"></div>
+    <!-- Оверлей УДАЛЁН -->
 
     <!-- ШАПКА -->
     <header class="header">
         <div class="logo">
-            <!-- Вместо SVG-лого можно поставить вашу картинку, либо текстовый лого -->
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="25" cy="25" r="25" fill="#ff7f17" />
                 <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
@@ -316,7 +302,7 @@
             <div class="menu-toggle" id="menuToggle">☰</div>
             <ul id="navList">
                 <li><a href="index.html">Главная</a></li>
-                <li><a href="launcher.apk">Скачать</a></li>
+                <li><a href="Launcher.apk" download>Скачать</a></li>
                 <li><a href="forum.html">Форум</a></li>
             </ul>
         </nav>
@@ -328,39 +314,35 @@
             <h1 class="main-title">Добро пожаловать в <span>SUNNY RUSSIA</span></h1>
             <div class="main-subtitle">⚡ Уникальный GTA 5 RP-сервер с голосовым чатом ⚡</div>
             
-            <!-- КНОПКА СКАЧИВАНИЯ ЛАУНЧЕРА -->
             <a href="Launcher.apk" download class="download-btn">
                 <i>⬇</i> СКАЧАТЬ ЛАУНЧЕР
             </a>
 
-            <!-- БЛОК ПРЕИМУЩЕСТВ (как на Bless Russia) -->
             <div class="features">
                 <div class="feature-item">
                     <span class="icon">🎮</span>
-                    <span class="label">Высокий онлайн</span>
+                    <span class="label">На твоём телефоне</span>
                 </div>
                 <div class="feature-item">
                     <span class="icon">🎙️</span>
-                    <span class="label">Голосовой чат</span>
+                    <span class="label">Лучшая команда администрации</span>
                 </div>
                 <div class="feature-item">
                     <span class="icon">⚡</span>
-                    <span class="label">Стабильный войс</span>
+                    <span class="label">Стабильный онлайн</span>
                 </div>
                 <div class="feature-item">
                     <span class="icon">🛡️</span>
-                    <span class="label">Уникальный мод</span>
+                    <span class="label">Доброе комьюнити</span>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- ПОДВАЛ -->
     <footer class="footer">
         © 2026 SUNNY RUSSIA · Все права защищены · <a href="#">Политика конфиденциальности</a>
     </footer>
 
-    <!-- ПРОСТОЙ СКРИПТ ДЛЯ БУРГЕР-МЕНЮ (как в оригинале) -->
     <script>
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('navList').classList.toggle('active');
@@ -368,4 +350,4 @@
     </script>
 
 </body>
-              </html>
+</html>

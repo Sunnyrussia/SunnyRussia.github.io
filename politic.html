@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUNNY RUSSIA | Политика конфиденциальности</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ===== ФОН НА ВСЮ СТРАНИЦУ (ВАША ССЫЛКА) ===== */
+        .full-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
+            z-index: -2;
+        }
+
+        /* ===== ШАПКА (HEADER) ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo svg {
+            width: 50px;
+            height: 50px;
+        }
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ff7f17;
+            text-shadow: 0 0 20px rgba(255, 127, 23, 0.4);
+            letter-spacing: 2px;
+        }
+        .nav-menu ul {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-menu ul li a {
+            color: #ccc;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu ul li a:hover,
+        .nav-menu ul li a.active {
+            color: #ff7f17;
+            text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
+            border-bottom-color: #ff7f17;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff7f17;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 120px);
+        }
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 127, 23, 0.3);
+        }
+        .page-title span {
+            color: #ff7f17;
+        }
+        .page-sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,127,23,0.1);
+            padding-bottom: 15px;
+        }
+
+        /* ===== СЕКЦИИ ПОЛИТИКИ ===== */
+        .policy-section {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 30px;
+            padding: 30px 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 127, 23, 0.1);
+            transition: transform 0.2s;
+        }
+        .policy-section:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 127, 23, 0.3);
+        }
+        .policy-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff7f17;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .policy-section h2 .emoji {
+            font-size: 2rem;
+        }
+        .policy-section p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+        .policy-section ul {
+            list-style: disc;
+            padding-left: 25px;
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        .policy-section ul li {
+            margin-bottom: 5px;
+        }
+        .policy-section ul li strong {
+            color: #ff7f17;
+        }
+        .highlight-box {
+            background: rgba(255, 127, 23, 0.1);
+            border-left: 4px solid #ff7f17;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .highlight-box p {
+            margin: 0;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* ===== КНОПКА НАЗАД ===== */
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255, 127, 23, 0.15);
+            border: 1px solid rgba(255, 127, 23, 0.3);
+            border-radius: 50px;
+            color: #ff7f17;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .back-home:hover {
+            background: rgba(255, 127, 23, 0.3);
+            box-shadow: 0 0 20px rgba(255, 127, 23, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #ff7f17;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            .nav-menu ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-menu ul.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .policy-section {
+                padding: 20px;
+            }
+            .policy-section h2 {
+                font-size: 1.4rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 1.2rem;
+            }
+            .policy-section p, .policy-section ul {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ФОН -->
+    <div class="full-bg"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="logo">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="25" fill="#ff7f17" />
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
+            </svg>
+            <span>SUNNY RUSSIA</span>
+        </div>
+        <nav class="nav-menu">
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <ul id="navList">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">Об игре</a></li>
+                <li><a href="forum.html">Форум</a></li>
+                <li><a href="politic.html" class="active">Политика</a></li>
+                <li><a href="Launcher.apk" download>Скачать</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+        <h1 class="page-title">Политика <span>конфиденциальности</span></h1>
+        <div class="page-sub">Правила использования сервера и обработка данных</div>
+
+        <!-- ВАЖНОЕ УСЛОВИЕ: СОГЛАСИЕ ПРИ СКАЧИВАНИИ -->
+        <div class="policy-section" style="border-color: #ff7f17; border-width: 2px;">
+            <h2><span class="emoji">📜</span> Ваше согласие</h2>
+            <div class="highlight-box">
+                <p>⚠️ <strong>Скачивая лаунчер SUNNY RUSSIA, вы автоматически подтверждаете, что полностью ознакомились с настоящей политикой и принимаете все её условия без исключений.</strong></p>
+            </div>
+            <p>Данное действие является юридически значимым и означает ваше добровольное согласие на сбор, обработку и использование ваших данных в рамках, описанных ниже. Если вы не согласны с каким-либо пунктом — воздержитесь от скачивания и использования нашего программного обеспечения.</p>
+        </div>
+
+        <!-- 1. Общие положения -->
+        <div class="policy-section">
+            <h2><span class="emoji">📌</span> 1. Общие положения</h2>
+            <p>Настоящая Политика конфиденциальности (далее — Политика) регулирует отношения между администрацией проекта <strong>SUNNY RUSSIA</strong> (далее — Администрация) и пользователем (далее — Игрок) при использовании игрового сервера, веб-сайта и лаунчера.</p>
+            <p>Все данные, полученные от Игрока, используются исключительно для обеспечения игрового процесса, технической поддержки и улучшения качества услуг. Администрация обязуется не передавать личную информацию третьим лицам, за исключением случаев, предусмотренных законодательством.</p>
+        </div>
+
+        <!-- 2. Собираемые данные -->
+        <div class="policy-section">
+            <h2><span class="emoji">🔍</span> 2. Какие данные мы собираем</h2>
+            <p>Для работы сервера и лаунчера мы можем запрашивать и хранить следующие данные:</p>
+            <ul>
+                <li><strong>Игровой никнейм</strong> — ваш уникальный идентификатор на сервере.</li>
+                <li><strong>IP-адрес</strong> — для защиты от мошенничества и обеспечения безопасности.</li>
+                <li><strong>Аппаратное обеспечение</strong> — информация о вашем компьютере (MAC-адрес, идентификаторы железа) для привязки аккаунта и предотвращения мультиаккаунтинга.</li>
+                <li><strong>Статистика игрового процесса</strong> — достижения, время в игре, внутриигровые действия (для анализа и балансировки).</li>
+                <li><strong>Cookie-файлы</strong> — для улучшения работы сайта и персонализации.</li>
+            </ul>
+            <p>Все данные хранятся на защищённых серверах и не подлежат разглашению.</p>
+        </div>
+
+        <!-- 3. Использование данных -->
+        <div class="policy-section">
+            <h2><span class="emoji">⚙️</span> 3. Как мы используем ваши данные</h2>
+            <ul>
+                <li><strong>Обеспечение игрового процесса</strong> — авторизация, сохранение прогресса, мультиплеерные функции.</li>
+                <li><strong>Техническая поддержка</strong> — решение проблем, помощь в восстановлении доступа.</li>
+                <li><strong>Безопасность</strong> — мониторинг подозрительных действий, борьба с читами и нарушениями.</li>
+                <li><strong>Улучшение сервиса</strong> — анализ поведения игроков для оптимизации баланса и контента.</li>
+                <li><strong>Информирование</strong> — уведомления о важных обновлениях, ивентах (только с вашего согласия).</li>
+            </ul>
+        </div>
+
+        <!-- 4. Передача данных третьим лицам -->
+        <div class="policy-section">
+            <h2><span class="emoji">🤝</span> 4. Передача данных третьим лицам</h2>
+            <p>Мы не продаём, не обмениваем и не передаём ваши личные данные кому-либо, за исключением:</p>
+            <ul>
+                <li>Предоставления по требованию уполномоченных органов в рамках действующего законодательства.</li>
+                <li>В случае реорганизации или продажи проекта (с уведомлением всех игроков).</li>
+                <li>Для привлечения проверенных партнёров (например, платёжных систем) — но только с вашего согласия.</li>
+            </ul>
+            <p>Все наши партнёры обязаны соблюдать конфиденциальность наравне с нами.</p>
+        </div>
+
+        <!-- 5. Безопасность данных -->
+        <div class="policy-section">
+            <h2><span class="emoji">🔒</span> 5. Меры безопасности</h2>
+            <p>Мы применяем современные методы шифрования и защиты данных, включая SSL-сертификаты, двухфакторную аутентификацию, регулярные аудиты безопасности. Однако, ни один метод не даёт 100% гарантии, поэтому мы рекомендуем вам также заботиться о своей безопасности: не передавайте пароли, используйте сложные пароли, обновляйте программное обеспечение.</p>
+            <p>В случае обнаружения уязвимости мы оперативно её устраним и уведомим игроков.</p>
+        </div>
+
+        <!-- 6. Права пользователя -->
+        <div class="policy-section">
+            <h2><span class="emoji">⚖️</span> 6. Ваши права</h2>
+            <ul>
+                <li><strong>Доступ</strong> — вы можете запросить все данные, которые мы храним о вас.</li>
+                <li><strong>Исправление</strong> — вы можете внести изменения в свои личные данные.</li>
+                <li><strong>Удаление</strong> — вы можете потребовать полного удаления вашей учётной записи и всех связанных данных (без возможности восстановления).</li>
+                <li><strong>Ограничение</strong> — вы можете ограничить обработку данных в определённых целях.</li>
+                <li><strong>Перенос</strong> — вы можете получить копию ваших данных в машиночитаемом формате.</li>
+            </ul>
+            <p>Для реализации любых прав обратитесь в службу поддержки через форму на сайте.</p>
+        </div>
+
+        <!-- 7. Ответственность -->
+        <div class="policy-section">
+            <h2><span class="emoji">⚠️</span> 7. Ограничение ответственности</h2>
+            <p>Администрация не несёт ответственности за ущерб, причинённый действиями самого игрока (например, передача пароля третьим лицам, нарушение правил игры). Игрок несёт полную ответственность за все действия, совершённые с его аккаунта.</p>
+            <p>Мы также не гарантируем бесперебойную работу сервера при форс-мажорных обстоятельствах, но приложим максимум усилий для восстановления.</p>
+        </div>
+
+        <!-- 8. Изменения политики -->
+        <div class="policy-section">
+            <h2><span class="emoji">🔄</span> 8. Изменения в политике</h2>
+            <p>Мы можем периодически обновлять данную Политику. О всех существенных изменениях мы будем уведомлять игроков на главной странице сайта или через лаунчер. Продолжение использования сервера после публикации изменений означает ваше автоматическое согласие с новой редакцией.</p>
+        </div>
+
+        <!-- 9. Возрастные ограничения -->
+        <div class="policy-section">
+            <h2><span class="emoji">🧒</span> 9. Возрастные ограничения</h2>
+            <p>Игровой сервер <strong>SUNNY RUSSIA</strong> предназначен для лиц старше 18 лет. Если вам не исполнилось 18 лет, вы можете использовать сервер только с согласия родителей или законных представителей, которые несут ответственность за ваши действия.</p>
+        </div>
+
+        <!-- 10. Контакты -->
+        <div class="policy-section">
+            <h2><span class="emoji">📞</span> 10. Контакты для вопросов</h2>
+            <p>Если у вас есть вопросы, касающиеся данной Политики, вы можете связаться с нами:</p>
+            <ul>
+                <li><strong>Email:</strong> support@sunnyrussia.ru</li>
+                <li><strong>Форма обратной связи:</strong> на главной странице сайта.</li>
+                <li><strong>Discord:</strong> ссылка на официальный сервер (в лаунчере).</li>
+            </ul>
+            <p>Мы ответим в течение 48 часов.</p>
+        </div>
+
+        <!-- Кнопка назад -->
+        <div style="text-align: center;">
+            <a href="index.html" class="back-home">← Вернуться на главную</a>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        © 2026 SUNNY RUSSIA · Все права защищены · <a href="politic.html">Политика конфиденциальности</a>
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+        });
+    </script>
+
+</body>
+  </html>

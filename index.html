@@ -43,47 +43,17 @@
         /* ===== ВЕРХНИЙ БАННЕР (ПРЯМОУГОЛЬНИК) ===== */
         .top-banner {
             width: 100%;
-            height: 200px; /* измените под свой размер */
-            background: linear-gradient(135deg, #ff7f17, #e65c00); /* ВРЕМЕННЫЙ ГРАДИЕНТ — ЗАМЕНИТЕ НА СВОЮ КАРТИНКУ */
-            /* background-image: url('ВАША_ССЫЛКА_СЮДА'); */
+            height: 200px; /* высота баннера */
+            background-image: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fd06d-66b8-7974-bedb-b86835a9aa30-bba7878c10ee4df8be4e53cba879573b.png');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             z-index: 1;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        /* Если нужно, чтобы баннер был строго сверху и не перекрывался шапкой, шапка будет поверх него */
-        .header {
-            position: relative;
-            z-index: 10;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(4px);
-            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
-            margin-top: -70px; /* чтобы наложить шапку на баннер, если нужно */
-            /* Если хотите, чтобы шапка была под баннером, уберите margin-top и сделайте её абсолютной */
-        }
-        /* Альтернативный вариант: шапка поверх баннера */
-        .header-absolute {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 20;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(4px);
-            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        /* Используем абсолютную шапку, чтобы она была поверх баннера */
+
+        /* ===== ШАПКА (поверх баннера) ===== */
         .header {
             position: absolute;
             top: 0;

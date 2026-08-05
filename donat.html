@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUNNY RUSSIA | Пополнение счёта</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Подключаем виджет Xsolla для приёма платежей -->
+    <script id="xsolla-widget" src="https://static.xsolla.com/embed/paystation/1.2.4/widget.min.js"></script>
+    <style>
+        /* ===== ГЛОБАЛЬНЫЙ СБРОС ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+
+        /* ===== ФОН ===== */
+        .full-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://unlimbot.hb.ru-msk.vkcloud-storage.ru/image/3/019fc89c-b020-77e0-a902-43e0edcb3498-55ca58ba2c0a4879b76ca83fd7ee7b19.png') no-repeat center center / cover;
+            z-index: -2;
+        }
+
+        /* ===== ШАПКА ===== */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid rgba(255, 127, 23, 0.2);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo svg {
+            width: 50px;
+            height: 50px;
+        }
+        .logo span {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ff7f17;
+            text-shadow: 0 0 20px rgba(255, 127, 23, 0.4);
+            letter-spacing: 2px;
+        }
+        .nav-menu ul {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .nav-menu ul li a {
+            color: #ccc;
+            transition: color 0.3s, text-shadow 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu ul li a:hover {
+            color: #ff7f17;
+            text-shadow: 0 0 15px rgba(255, 127, 23, 0.5);
+            border-bottom-color: #ff7f17;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ff7f17;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 120px);
+        }
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 127, 23, 0.3);
+        }
+        .page-title span {
+            color: #ff7f17;
+        }
+        .page-sub {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,127,23,0.1);
+            padding-bottom: 15px;
+        }
+
+        /* ===== ВЫБОР СЕРВЕРА ===== */
+        .server-select {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 127, 23, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+        }
+        .server-select label {
+            font-weight: 700;
+            color: #ff7f17;
+            font-size: 1.1rem;
+            margin-right: 10px;
+        }
+        .server-select select {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 127, 23, 0.3);
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .server-select select:hover,
+        .server-select select:focus {
+            border-color: #ff7f17;
+        }
+        .server-select select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        /* ===== СЛАЙДЕР ТОВАРОВ (ДОНАТ-ПАКЕТЫ) ===== */
+        .donate-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .donate-item {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 20px;
+            padding: 25px 20px;
+            border: 1px solid rgba(255, 127, 23, 0.1);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .donate-item:hover {
+            transform: translateY(-5px);
+            border-color: #ff7f17;
+            box-shadow: 0 10px 30px rgba(255, 127, 23, 0.15);
+        }
+        .donate-item.selected {
+            border-color: #ff7f17;
+            box-shadow: 0 0 30px rgba(255, 127, 23, 0.2);
+        }
+        .donate-item .icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .donate-item .name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .donate-item .desc {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        .donate-item .price {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #ff7f17;
+        }
+        .donate-item .price small {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .donate-item .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff7f17;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        /* ===== ИТОГО И КНОПКА ОПЛАТЫ ===== */
+        .total-block {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            border-radius: 20px;
+            padding: 25px 30px;
+            border: 1px solid rgba(255, 127, 23, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .total-block .total-label {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .total-block .total-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ff7f17;
+        }
+        .pay-btn {
+            display: inline-block;
+            padding: 16px 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            background: linear-gradient(135deg, #ff7f17, #e65c00);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 127, 23, 0.3);
+            transition: all 0.3s ease;
+        }
+        .pay-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 50px rgba(255, 127, 23, 0.5);
+            background: linear-gradient(135deg, #ff9933, #ff5500);
+        }
+        .pay-btn:active {
+            transform: scale(0.96);
+        }
+        .pay-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== ПОДВАЛ ===== */
+        .footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+        }
+        .footer a {
+            color: #ff7f17;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            .nav-menu ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                padding: 20px;
+                border-radius: 10px;
+                margin-top: 15px;
+            }
+            .nav-menu ul.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .donate-slider {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 15px;
+            }
+            .total-block {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .pay-btn {
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo span {
+                font-size: 1.2rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            .donate-item {
+                padding: 15px;
+            }
+            .donate-item .icon {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ФОН -->
+    <div class="full-bg"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="logo">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="25" cy="25" r="25" fill="#ff7f17" />
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="24" font-weight="900">SR</text>
+            </svg>
+            <span>SUNNY RUSSIA</span>
+        </div>
+        <nav class="nav-menu">
+            <div class="menu-toggle" id="menuToggle">☰</div>
+            <ul id="navList">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О игре</a></li>
+                <li><a href="forum.html">Форум</a></li>
+                <li><a href="donat.html">Донат</a></li>
+                <li><a href="politic.html">Политика</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ОСНОВНАЯ ЧАСТЬ -->
+    <main class="main">
+        <h1 class="page-title">Пополнение <span>счёта</span></h1>
+        <div class="page-sub">Выберите сервер, товар и пополните баланс</div>
+
+        <!-- ВЫБОР СЕРВЕРА -->
+        <div class="server-select">
+            <label for="server">Выберите ваш сервер</label>
+            <select id="server">
+                <option value="RED">RED</option>
+                <option value="GREEN">GREEN</option>
+                <option value="BLUE">BLUE</option>
+            </select>
+        </div>
+
+        <!-- СЛАЙДЕР ТОВАРОВ (ДОНАТ-ПАКЕТЫ) -->
+        <div class="donate-slider" id="donateSlider">
+            <!-- Товары будут добавлены JavaScript -->
+        </div>
+
+        <!-- ИТОГО + КНОПКА ОПЛАТЫ -->
+        <div class="total-block">
+            <span class="total-label">К оплате:</span>
+            <span class="total-price" id="totalPrice">0 ₽</span>
+            <button class="pay-btn" id="payBtn">Перейти к оплате</button>
+        </div>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        © 2026 SUNNY RUSSIA · Все права защищены · <a href="politic.html">Политика конфиденциальности</a>
+    </footer>
+
+    <script>
+        // ===== БУРГЕР-МЕНЮ =====
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navList').classList.toggle('active');
+        });
+
+        // ===== ДАННЫЕ ТОВАРОВ (ДОНАТ-ПАКЕТЫ) =====
+        const products = [
+            { id: 1, name: 'Стартовый набор', desc: 'Для быстрого старта', price: 100, icon: '🚀', badge: 'Популярный' },
+            { id: 2, name: 'VIP-статус', desc: 'Привилегии на месяц', price: 250, icon: '👑', badge: '' },
+            { id: 3, name: 'Премиум пакет', desc: 'Максимум возможностей', price: 500, icon: '💎', badge: 'Хит' },
+            { id: 4, name: 'Мега-пакет', desc: 'Всё и даже больше', price: 1000, icon: '🔥', badge: '' },
+            { id: 5, name: 'Легендарный набор', desc: 'Стань легендой', price: 2500, icon: '⭐', badge: 'Топ' },
+            { id: 6, name: 'Имба-пакет', desc: 'Абсолютная мощь', price: 5000, icon: '💥', badge: 'Ультимативный' }
+        ];
+
+        let selectedProduct = null;
+        let total = 0;
+
+        // ===== ОТРИСОВКА ТОВАРОВ =====
+        const slider = document.getElementById('donateSlider');
+        products.forEach(p => {
+            const item = document.createElement('div');
+            item.className = 'donate-item';
+            item.dataset.id = p.id;
+            item.innerHTML = `
+                <span class="icon">${p.icon}</span>
+                <div class="name">${p.name}</div>
+                <div class="desc">${p.desc}</div>
+                <div class="price">${p.price} <small>₽</small></div>
+                ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+            `;
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.donate-item').forEach(el => el.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedProduct = p;
+                total = p.price;
+                document.getElementById('totalPrice').textContent = total + ' ₽';
+                document.getElementById('payBtn').disabled = false;
+            });
+            slider.appendChild(item);
+        });
+
+        // ===== КНОПКА ОПЛАТЫ (ЧЕРЕЗ XSOLLA) =====
+        document.getElementById('payBtn').addEventListener('click', function() {
+            if (!selectedProduct) {
+                alert('Пожалуйста, выберите товар.');
+                return;
+            }
+
+            // Данные для платежа через Xsolla
+            const paymentData = {
+                amount: total,
+                currency: 'RUB',
+                description: `Пополнение счёта SUNNY RUSSIA: ${selectedProduct.name}`,
+                // В реальном проекте здесь должен быть ваш project ID из Xsolla
+                projectId: 'YOUR_XSOLLA_PROJECT_ID',
+                // Параметры для виджета
+                widget: {
+                    type: 'iframe',
+                    width: '100%',
+                    height: '600px'
+                }
+            };
+
+            // Инициализация виджета Xsolla
+            if (typeof XsollaWidget !== 'undefined') {
+                const widget = new XsollaWidget({
+                    projectId: paymentData.projectId,
+                    amount: paymentData.amount,
+                    currency: paymentData.currency,
+                    description: paymentData.description,
+                    // URL для возврата после оплаты
+                    returnUrl: window.location.href
+                });
+                widget.open();
+            } else {
+                // Запасной вариант — просто уведомление (для демонстрации)
+                alert(`Оплата ${total} ₽ за "${selectedProduct.name}" через Xsolla.\n\nЗдесь откроется платёжное окно.`);
+            }
+        });
+
+        // Блокируем кнопку оплаты, пока не выбран товар
+        document.getElementById('payBtn').disabled = true;
+    </script>
+
+</body>
+  </html>
